@@ -79,7 +79,7 @@ public class HandTest {
 	 * 
 	 * @throws Exception
 	 */
-	//@Test(expected = HandException.class)
+	@Test(expected = HandException.class)
 	public void TestEvalShortHand() throws Exception {
 
 		Hand h = new Hand();
@@ -94,7 +94,7 @@ public class HandTest {
 		h = Hand.EvaluateHand(h);
 	}
 
-	//@Test
+	@Test
 	public void TestFourOfAKind() {
 
 		HandScore hs = new HandScore();
@@ -121,7 +121,7 @@ public class HandTest {
 		assertEquals(hs.getKickers().get(eCardNo.FirstCard.getCardNo()).geteRank(), eRank.KING);
 	}
 
-	//@Test
+	@Test
 	public void TestFourOfAKind2() {
 
 		HandScore hs = new HandScore();
@@ -148,7 +148,7 @@ public class HandTest {
 		assertEquals(hs.getKickers().get(eCardNo.FirstCard.getCardNo()).geteRank(), eRank.KING);
 	}
 
-	//@Test
+	@Test
 	public void TestThreeOfAKind() {
 		HandScore hs = new HandScore();
 		ArrayList<Card> ThreeOfAKind = new ArrayList<Card>();
@@ -179,7 +179,7 @@ public class HandTest {
 
 	}
 
-	//@Test
+	@Test
 	public void TestThreeOfAKind2() {
 		HandScore hs = new HandScore();
 		ArrayList<Card> ThreeOfAKind = new ArrayList<Card>();
@@ -210,7 +210,7 @@ public class HandTest {
 
 	}
 
-	//@Test
+	@Test
 	public void TestThreeOfAKind3() {
 		HandScore hs = new HandScore();
 		ArrayList<Card> ThreeOfAKind = new ArrayList<Card>();
@@ -241,14 +241,14 @@ public class HandTest {
 
 	}
 
-	//@Test
+	@Test
 	public void TestPair() {
 		HandScore hs = new HandScore();
 		ArrayList<Card> Pair = new ArrayList<Card>();
-		Pair.add(new Card(eSuit.CLUBS, eRank.KING, 0));
+		Pair.add(new Card(eSuit.HEARTS, eRank.QUEEN, 0));
 		Pair.add(new Card(eSuit.HEARTS, eRank.QUEEN, 0));
 		Pair.add(new Card(eSuit.CLUBS, eRank.ACE, 0));
-		Pair.add(new Card(eSuit.CLUBS, eRank.ACE, 0));
+		Pair.add(new Card(eSuit.CLUBS, eRank.KING, 0));
 		Pair.add(new Card(eSuit.CLUBS, eRank.JACK, 0));
 
 		Hand h = new Hand();
@@ -257,33 +257,33 @@ public class HandTest {
 		boolean bActualHandPair = Hand.isHandPair(h, hs);
 		boolean bExpectedHandPair = true;
 
-		// Did this evaluate to Four of a Kind?
+		// Did this evaluate to a Pair?
 		assertEquals(bActualHandPair, bExpectedHandPair);
 		// Was the three of a kind an Ace?
-		assertEquals(hs.getHiHand(), eRank.ACE.getiRankNum());
-		// TOAK has two kickers. Was it a Club?
+		assertEquals(hs.getHiHand(), eRank.QUEEN.getiRankNum());
+		// Pairs has three kickers. Was the first one a Club?
 		assertEquals(hs.getKickers().get(eCardNo.FirstCard.getCardNo()).geteSuit(), eSuit.CLUBS);
-		// TOAK has two kickers. Was it a King?
-		assertEquals(hs.getKickers().get(eCardNo.FirstCard.getCardNo()).geteRank(), eRank.KING);
-		// TOAK has two kickers. Was it a Club?
-		assertEquals(hs.getKickers().get(eCardNo.SecondCard.getCardNo()).geteSuit(), eSuit.HEARTS);
-		// TOAK has two kickers. Was it a King?
-		assertEquals(hs.getKickers().get(eCardNo.SecondCard.getCardNo()).geteRank(), eRank.QUEEN);
-		// TOAK has two kickers. Was it a Club?
+		// Pairs has three kickers. Was the first one an Ace?
+		assertEquals(hs.getKickers().get(eCardNo.FirstCard.getCardNo()).geteRank(), eRank.ACE);
+		// Pairs has three kickers. Was the second one a Club?
+		assertEquals(hs.getKickers().get(eCardNo.SecondCard.getCardNo()).geteSuit(), eSuit.CLUBS);
+		// Pairs has three kickers. Was the second one a King?
+		assertEquals(hs.getKickers().get(eCardNo.SecondCard.getCardNo()).geteRank(), eRank.KING);
+		// Pairs has three kickers. Was the third one a Club?
 		assertEquals(hs.getKickers().get(eCardNo.ThirdCard.getCardNo()).geteSuit(), eSuit.CLUBS);
-		// TOAK has two kickers. Was it a King?
+		// Pairs has three kickers. Was the third one a Jack?
 		assertEquals(hs.getKickers().get(eCardNo.ThirdCard.getCardNo()).geteRank(), eRank.JACK);
 
 	}
-	
-	//@Test
+
+	@Test
 	public void TestPair2() {
 		HandScore hs = new HandScore();
 		ArrayList<Card> Pair = new ArrayList<Card>();
-		Pair.add(new Card(eSuit.CLUBS, eRank.KING, 0));
+		Pair.add(new Card(eSuit.CLUBS, eRank.ACE, 0));
 		Pair.add(new Card(eSuit.HEARTS, eRank.QUEEN, 0));
-		Pair.add(new Card(eSuit.CLUBS, eRank.ACE, 0));
-		Pair.add(new Card(eSuit.CLUBS, eRank.ACE, 0));
+		Pair.add(new Card(eSuit.HEARTS, eRank.QUEEN, 0));
+		Pair.add(new Card(eSuit.CLUBS, eRank.KING, 0));
 		Pair.add(new Card(eSuit.CLUBS, eRank.JACK, 0));
 
 		Hand h = new Hand();
@@ -292,26 +292,26 @@ public class HandTest {
 		boolean bActualHandPair = Hand.isHandPair(h, hs);
 		boolean bExpectedHandPair = true;
 
-		// Did this evaluate to Four of a Kind?
+		// Did this evaluate to a Pair?
 		assertEquals(bActualHandPair, bExpectedHandPair);
 		// Was the three of a kind an Ace?
-		assertEquals(hs.getHiHand(), eRank.ACE.getiRankNum());
-		// TOAK has two kickers. Was it a Club?
+		assertEquals(hs.getHiHand(), eRank.QUEEN.getiRankNum());
+		// Pairs has three kickers. Was the first one a Club?
 		assertEquals(hs.getKickers().get(eCardNo.FirstCard.getCardNo()).geteSuit(), eSuit.CLUBS);
-		// TOAK has two kickers. Was it a King?
-		assertEquals(hs.getKickers().get(eCardNo.FirstCard.getCardNo()).geteRank(), eRank.KING);
-		// TOAK has two kickers. Was it a Club?
-		assertEquals(hs.getKickers().get(eCardNo.SecondCard.getCardNo()).geteSuit(), eSuit.HEARTS);
-		// TOAK has two kickers. Was it a King?
-		assertEquals(hs.getKickers().get(eCardNo.SecondCard.getCardNo()).geteRank(), eRank.QUEEN);
-		// TOAK has two kickers. Was it a Club?
+		// Pairs has three kickers. Was the first one an Ace?
+		assertEquals(hs.getKickers().get(eCardNo.FirstCard.getCardNo()).geteRank(), eRank.ACE);
+		// Pairs has three kickers. Was the second one a Club?
+		assertEquals(hs.getKickers().get(eCardNo.SecondCard.getCardNo()).geteSuit(), eSuit.CLUBS);
+		// Pairs has three kickers. Was the second one a King?
+		assertEquals(hs.getKickers().get(eCardNo.SecondCard.getCardNo()).geteRank(), eRank.KING);
+		// Pairs has three kickers. Was the third one a Club?
 		assertEquals(hs.getKickers().get(eCardNo.ThirdCard.getCardNo()).geteSuit(), eSuit.CLUBS);
-		// TOAK has two kickers. Was it a King?
+		// Pairs has three kickers. Was the third one a Jack?
 		assertEquals(hs.getKickers().get(eCardNo.ThirdCard.getCardNo()).geteRank(), eRank.JACK);
 
 	}
-	
-	//@Test
+
+	@Test
 	public void TestPair3() {
 		HandScore hs = new HandScore();
 		ArrayList<Card> Pair = new ArrayList<Card>();
@@ -345,8 +345,93 @@ public class HandTest {
 		assertEquals(hs.getKickers().get(eCardNo.ThirdCard.getCardNo()).geteRank(), eRank.JACK);
 
 	}
-	//@Test
-	public void TestRoyalFlush(){
+
+	@Test
+	public void TestPair4() {
+		HandScore hs = new HandScore();
+		ArrayList<Card> Pair = new ArrayList<Card>();
+		Pair.add(new Card(eSuit.CLUBS, eRank.ACE, 0));
+		Pair.add(new Card(eSuit.CLUBS, eRank.KING, 0));
+		Pair.add(new Card(eSuit.CLUBS, eRank.JACK, 0));
+		Pair.add(new Card(eSuit.HEARTS, eRank.QUEEN, 0));
+		Pair.add(new Card(eSuit.HEARTS, eRank.QUEEN, 0));
+		Hand h = new Hand();
+		h = SetHand(Pair, h);
+
+		boolean bActualHandPair = Hand.isHandPair(h, hs);
+		boolean bExpectedHandPair = true;
+
+		// Did this evaluate to a Pair?
+		assertEquals(bActualHandPair, bExpectedHandPair);
+		// Was the three of a kind an Ace?
+		assertEquals(hs.getHiHand(), eRank.QUEEN.getiRankNum());
+		// Pairs has three kickers. Was the first one a Club?
+		assertEquals(hs.getKickers().get(eCardNo.FirstCard.getCardNo()).geteSuit(), eSuit.CLUBS);
+		// Pairs has three kickers. Was the first one an Ace?
+		assertEquals(hs.getKickers().get(eCardNo.FirstCard.getCardNo()).geteRank(), eRank.ACE);
+		// Pairs has three kickers. Was the second one a Club?
+		assertEquals(hs.getKickers().get(eCardNo.SecondCard.getCardNo()).geteSuit(), eSuit.CLUBS);
+		// Pairs has three kickers. Was the second one a King?
+		assertEquals(hs.getKickers().get(eCardNo.SecondCard.getCardNo()).geteRank(), eRank.KING);
+		// Pairs has three kickers. Was the third one a Club?
+		assertEquals(hs.getKickers().get(eCardNo.ThirdCard.getCardNo()).geteSuit(), eSuit.CLUBS);
+		// Pairs has three kickers. Was the third one a Jack?
+		assertEquals(hs.getKickers().get(eCardNo.ThirdCard.getCardNo()).geteRank(), eRank.JACK);
+
+	}
+
+	@Test
+	public void TestTwoPair5() {
+		HandScore hs = new HandScore();
+		ArrayList<Card> TwoPair = new ArrayList<Card>();
+		TwoPair.add(new Card(eSuit.CLUBS, eRank.ACE, 0));
+		TwoPair.add(new Card(eSuit.HEARTS, eRank.ACE, 0));
+		TwoPair.add(new Card(eSuit.CLUBS, eRank.JACK, 0));
+		TwoPair.add(new Card(eSuit.CLUBS, eRank.QUEEN, 0));
+		TwoPair.add(new Card(eSuit.HEARTS, eRank.QUEEN, 0));
+		Hand h = new Hand();
+		h = SetHand(TwoPair, h);
+
+		boolean bHandActualTwoPair = Hand.isHandTwoPair(h, hs);
+		boolean bExpectedHandTwoPair = true;
+
+		// Did this evaluate to a Pair?
+		assertEquals(bHandActualTwoPair, bExpectedHandTwoPair);
+		// Was the three of a kind an Ace?
+		assertEquals(hs.getHiHand(), eRank.ACE.getiRankNum());
+		// Pairs has three kickers. Was the third one a Club?
+		assertEquals(hs.getKickers().get(eCardNo.FirstCard.getCardNo()).geteSuit(), eSuit.CLUBS);
+		// Pairs has three kickers. Was the third one a Jack?
+		assertEquals(hs.getKickers().get(eCardNo.FirstCard.getCardNo()).geteRank(), eRank.JACK);
+	}
+	
+	@Test
+	public void TestTwoPair6() {
+		HandScore hs = new HandScore();
+		ArrayList<Card> TwoPair = new ArrayList<Card>();
+		TwoPair.add(new Card(eSuit.CLUBS, eRank.QUEEN, 0));
+		TwoPair.add(new Card(eSuit.HEARTS, eRank.QUEEN, 0));
+		TwoPair.add(new Card(eSuit.CLUBS, eRank.JACK, 0));
+		TwoPair.add(new Card(eSuit.CLUBS, eRank.KING, 0));
+		TwoPair.add(new Card(eSuit.HEARTS, eRank.KING, 0));
+		Hand h = new Hand();
+		h = SetHand(TwoPair, h);
+
+		boolean bHandActualTwoPair = Hand.isHandTwoPair(h, hs);
+		boolean bExpectedHandTwoPair = true;
+
+		// Did this evaluate to a Pair?
+		assertEquals(bHandActualTwoPair, bExpectedHandTwoPair);
+		// Was the three of a kind an Ace?
+		assertEquals(hs.getHiHand(), eRank.KING.getiRankNum());
+		// Pairs has three kickers. Was the third one a Club?
+		assertEquals(hs.getKickers().get(eCardNo.FirstCard.getCardNo()).geteSuit(), eSuit.CLUBS);
+		// Pairs has three kickers. Was the third one a Jack?
+		assertEquals(hs.getKickers().get(eCardNo.FirstCard.getCardNo()).geteRank(), eRank.JACK);
+	}
+	
+	@Test
+	public void TestRoyalFlush() {
 		HandScore hs = new HandScore();
 		ArrayList<Card> Pair = new ArrayList<Card>();
 		Pair.add(new Card(eSuit.SPADES, eRank.ACE, 0));
@@ -365,11 +450,11 @@ public class HandTest {
 		assertEquals(bActualHandPair, bExpectedHandPair);
 		// Was the highest card an Ace?
 		assertEquals(hs.getHiHand(), eRank.ACE.getiRankNum());
-		//No test for kickers because there are no kickers
+		// No test for kickers because there are no kickers
 	}
-	
-	//@Test
-	public void TestStraightFlush(){
+
+	@Test
+	public void TestStraightFlush() {
 		HandScore hs = new HandScore();
 		ArrayList<Card> Pair = new ArrayList<Card>();
 		Pair.add(new Card(eSuit.SPADES, eRank.TEN, 0));
@@ -388,11 +473,11 @@ public class HandTest {
 		assertEquals(bActualHandPair, bExpectedHandPair);
 		// Was the highest card a Ten?
 		assertEquals(hs.getHiHand(), eRank.TEN.getiRankNum());
-		//No test for kickers because there are no kickers
+		// No test for kickers because there are no kickers
 	}
-	
-	//@Test
-	public void TestFlush(){
+
+	@Test
+	public void TestFlush() {
 		HandScore hs = new HandScore();
 		ArrayList<Card> Pair = new ArrayList<Card>();
 		Pair.add(new Card(eSuit.SPADES, eRank.QUEEN, 0));
@@ -411,11 +496,11 @@ public class HandTest {
 		assertEquals(bActualHandPair, bExpectedHandPair);
 		// Was the highest card an Ace?
 		assertEquals(hs.getHiHand(), eRank.QUEEN.getiRankNum());
-		//No test for kickers because there are no kickers
+		// No test for kickers because there are no kickers
 	}
-	
+
 	@Test
-	public void TestStraight(){
+	public void TestStraight() {
 		HandScore hs = new HandScore();
 		ArrayList<Card> Pair = new ArrayList<Card>();
 		Pair.add(new Card(eSuit.SPADES, eRank.SEVEN, 0));
@@ -434,6 +519,7 @@ public class HandTest {
 		assertEquals(bActualHandPair, bExpectedHandPair);
 		// Was the highest card an Ace?
 		assertEquals(hs.getHiHand(), eRank.SEVEN.getiRankNum());
-		//No test for kickers because there are no kickers
+		// No test for kickers because there are no kickers
 	}
+
 }
