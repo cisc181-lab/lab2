@@ -15,18 +15,44 @@ import pokerEnums.*;
 import static java.lang.System.out;
 import static java.lang.System.err;
 
+/**
+ * An implementation of a hand
+ * 
+ * @author Charles Cheung, Adam Caulfield, Khalid Al-Sarhan, Morgan Sanchez
+ *
+ */
 public class Hand {
 
+	/**
+	 * the cards in the hand
+	 */
 	private ArrayList<Card> CardsInHand;
+	/**
+	 * the best cards in the hand
+	 */
 	private ArrayList<Card> BestCardsInHand;
+	/**
+	 * the hand score
+	 */
 	private HandScore HandScore;
+	/**
+	 * a boolean used to check to see whether a hand has been evaluated
+	 */
 	private boolean bScored = false;
 
+	/**
+	 * a constructor for hand
+	 */
 	public Hand() {
 		CardsInHand = new ArrayList<Card>();
 		BestCardsInHand = new ArrayList<Card>();
 	}
 
+	/**
+	 * a getter for the cards in a hand
+	 * 
+	 * @return the cards in the hand
+	 */
 	public ArrayList<Card> getCardsInHand() {
 		return CardsInHand;
 	}
@@ -35,6 +61,11 @@ public class Hand {
 		CardsInHand = cardsInHand;
 	}
 
+	/**
+	 * a getter for the best cards in a hand
+	 * 
+	 * @return the best cards in the hand
+	 */
 	public ArrayList<Card> getBestCardsInHand() {
 		return BestCardsInHand;
 	}
@@ -43,6 +74,11 @@ public class Hand {
 		BestCardsInHand = bestCardsInHand;
 	}
 
+	/**
+	 * a getter for the hand score
+	 * 
+	 * @return the hand score
+	 */
 	public HandScore getHandScore() {
 		return HandScore;
 	}
@@ -51,6 +87,11 @@ public class Hand {
 		HandScore = handScore;
 	}
 
+	/**
+	 * a boolean determining whether the score has been determined
+	 * 
+	 * @return a boolean
+	 */
 	public boolean isbScored() {
 		return bScored;
 	}
@@ -59,11 +100,26 @@ public class Hand {
 		this.bScored = bScored;
 	}
 
+	/**
+	 * adds a card to the hand
+	 * 
+	 * @param c
+	 *            a card
+	 * @return the cards in the hand
+	 */
 	public Hand AddCardToHand(Card c) {
 		CardsInHand.add(c);
 		return this;
 	}
 
+	/**
+	 * draws from the deck
+	 * 
+	 * @param d
+	 *            deck
+	 * @return the cards in the hand
+	 * @throws DeckException
+	 */
 	public Hand Draw(Deck d) throws DeckException {
 		CardsInHand.add(d.Draw());
 		return this;
@@ -125,12 +181,36 @@ public class Hand {
 		return h;
 	}
 
+	/**
+	 * checks to see if a hand is five of a kind
+	 * 
+	 * @param h
+	 *            a hand
+	 * @param hs
+	 *            a hand score
+	 * @return a boolean checking if the hand has been evaluated
+	 */
 	public static boolean isHandFiveOfAKind(Hand h, HandScore hs) {
-		hs.setHandStrength(eHandStrength.FiveOfAKind.getHandStrength());
-
-		return false;
+		boolean bHandCheck = false;
+		if (h.getCardsInHand().get(eCardNo.FirstCard.getCardNo()).geteRank() == h.getCardsInHand()
+				.get(eCardNo.FifthCard.getCardNo()).geteRank()) {
+			bHandCheck = true;
+			hs.setHandStrength(eHandStrength.FiveOfAKind.getHandStrength());
+			hs.setHiHand(h.getCardsInHand().get(eCardNo.FirstCard.getCardNo()).geteRank().getiRankNum());
+			hs.setLoHand(0);
+		}
+		return bHandCheck;
 	}
 
+	/**
+	 * checks to see if a hand is a royal flush
+	 * 
+	 * @param h
+	 *            a hand
+	 * @param hs
+	 *            a hand score
+	 * @return a boolean checking if the hand has been evaluated
+	 */
 	public static boolean isHandRoyalFlush(Hand h, HandScore hs) {
 		boolean bHandCheck = false;
 		if (isHandStraight(h, hs) && isHandFlush(h, hs)
@@ -144,6 +224,15 @@ public class Hand {
 		return bHandCheck;
 	}
 
+	/**
+	 * checks to see if a hand is a straight flush
+	 * 
+	 * @param h
+	 *            a hand
+	 * @param hs
+	 *            a hand score
+	 * @return a boolean checking if the hand has been evaluated
+	 */
 	public static boolean isHandStraightFlush(Hand h, HandScore hs) {
 		boolean bHandCheck = false;
 
@@ -159,6 +248,15 @@ public class Hand {
 		return bHandCheck;
 	}
 
+	/**
+	 * checks to see if a hand is four of a kind
+	 * 
+	 * @param h
+	 *            a hand
+	 * @param hs
+	 *            a hand score
+	 * @return a boolean checking if the hand has been evaluated
+	 */
 	public static boolean isHandFourOfAKind(Hand h, HandScore hs) {
 
 		boolean bHandCheck = false;
@@ -187,11 +285,47 @@ public class Hand {
 		return bHandCheck;
 	}
 
+	/**
+	 * checks to see if a hand is a full house
+	 * 
+	 * @param h
+	 *            a hand
+	 * @param hs
+	 *            a hand score
+	 * @return a boolean checking if the hand has been evaluated
+	 */
 	public static boolean isHandFullHouse(Hand h, HandScore hs) {
-		hs.setHandStrength(eHandStrength.FullHouse.getHandStrength());
-		return false;
+
+		boolean bHandCheck = false;
+		if (h.getCardsInHand().get(eCardNo.FirstCard.getCardNo()).geteRank() == h.getCardsInHand()
+				.get(eCardNo.ThirdCard.getCardNo()).geteRank()
+				&& h.getCardsInHand().get(eCardNo.FourthCard.getCardNo()).geteRank() == h.getCardsInHand()
+						.get(eCardNo.FifthCard.getCardNo()).geteRank()) {
+			bHandCheck = true;
+			hs.setHandStrength(eHandStrength.FullHouse.getHandStrength());
+			hs.setHiHand(h.getCardsInHand().get(eCardNo.FirstCard.getCardNo()).geteRank().getiRankNum());
+			hs.setLoHand(h.getCardsInHand().get(eCardNo.FourthCard.getCardNo()).geteRank().getiRankNum());
+		} else if (h.getCardsInHand().get(eCardNo.ThirdCard.getCardNo()).geteRank() == h.getCardsInHand()
+				.get(eCardNo.FifthCard.getCardNo()).geteRank()
+				&& h.getCardsInHand().get(eCardNo.FirstCard.getCardNo()).geteRank() == h.getCardsInHand()
+						.get(eCardNo.SecondCard.getCardNo()).geteRank()) {
+			bHandCheck = true;
+			hs.setHandStrength(eHandStrength.FullHouse.getHandStrength());
+			hs.setHiHand(h.getCardsInHand().get(eCardNo.ThirdCard.getCardNo()).geteRank().getiRankNum());
+			hs.setLoHand(h.getCardsInHand().get(eCardNo.FirstCard.getCardNo()).geteRank().getiRankNum());
+		}
+		return bHandCheck;
 	}
 
+	/**
+	 * checks to see if a hand is a flush
+	 * 
+	 * @param h
+	 *            a hand
+	 * @param hs
+	 *            a hand score
+	 * @return a boolean checking if the hand has been evaluated
+	 */
 	public static boolean isHandFlush(Hand h, HandScore hs) {
 
 		boolean bHandCheck = false;
@@ -213,6 +347,15 @@ public class Hand {
 		return bHandCheck;
 	}
 
+	/**
+	 * checks to see if a hand is a straight
+	 * 
+	 * @param h
+	 *            a hand
+	 * @param hs
+	 *            a hand score
+	 * @return a boolean checking if the hand has been evaluated
+	 */
 	public static boolean isHandStraight(Hand h, HandScore hs) {
 
 		boolean bHandCheck = false;
@@ -235,6 +378,15 @@ public class Hand {
 		return bHandCheck;
 	}
 
+	/**
+	 * checks to see if a hand is three of a kind
+	 * 
+	 * @param h
+	 *            a hand
+	 * @param hs
+	 *            a hand score
+	 * @return a boolean checking if the hand has been evaluated
+	 */
 	public static boolean isHandThreeOfAKind(Hand h, HandScore hs) {
 
 		boolean bHandCheck = false;
@@ -275,6 +427,15 @@ public class Hand {
 		return bHandCheck;
 	}
 
+	/**
+	 * checks to see if a hand has two pairs
+	 * 
+	 * @param h
+	 *            a hand
+	 * @param hs
+	 *            a hand score
+	 * @return a boolean checking if the hand has been evaluated
+	 */
 	public static boolean isHandTwoPair(Hand h, HandScore hs) {
 		boolean bHandCheck = false;
 
@@ -284,14 +445,17 @@ public class Hand {
 					&& (h.getCardsInHand().get(eCardNo.ThirdCard.getCardNo()).geteRank() == h.getCardsInHand()
 							.get(eCardNo.FourthCard.getCardNo()).geteRank())) {
 				bHandCheck = true;
-				hs.setHandStrength(eHandStrength.ThreeOfAKind.getHandStrength());
+				hs.setHandStrength(eHandStrength.TwoPair.getHandStrength());
 				if (h.getCardsInHand().get(eCardNo.FirstCard.getCardNo()).geteRank().getiRankNum() > h.getCardsInHand()
 						.get(eCardNo.ThirdCard.getCardNo()).geteRank().getiRankNum()) {
 					hs.setHiHand(h.getCardsInHand().get(eCardNo.FirstCard.getCardNo()).geteRank().getiRankNum());
+					hs.setLoHand(h.getCardsInHand().get(eCardNo.ThirdCard.getCardNo()).geteRank().getiRankNum());
+
 				} else {
 					hs.setHiHand(h.getCardsInHand().get(eCardNo.ThirdCard.getCardNo()).geteRank().getiRankNum());
+					hs.setLoHand(h.getCardsInHand().get(eCardNo.FirstCard.getCardNo()).geteRank().getiRankNum());
+
 				}
-				hs.setLoHand(0);
 				ArrayList<Card> kickers = new ArrayList<Card>();
 				kickers.add(h.getCardsInHand().get(eCardNo.FifthCard.getCardNo()));
 				hs.setKickers(kickers);
@@ -300,14 +464,17 @@ public class Hand {
 					&& (h.getCardsInHand().get(eCardNo.FourthCard.getCardNo()).geteRank() == h.getCardsInHand()
 							.get(eCardNo.FifthCard.getCardNo()).geteRank())) {
 				bHandCheck = true;
-				hs.setHandStrength(eHandStrength.ThreeOfAKind.getHandStrength());
+				hs.setHandStrength(eHandStrength.TwoPair.getHandStrength());
 				if (h.getCardsInHand().get(eCardNo.SecondCard.getCardNo()).geteRank().getiRankNum() > h.getCardsInHand()
 						.get(eCardNo.FourthCard.getCardNo()).geteRank().getiRankNum()) {
 					hs.setHiHand(h.getCardsInHand().get(eCardNo.SecondCard.getCardNo()).geteRank().getiRankNum());
+					hs.setLoHand(h.getCardsInHand().get(eCardNo.FourthCard.getCardNo()).geteRank().getiRankNum());
+
 				} else {
 					hs.setHiHand(h.getCardsInHand().get(eCardNo.FourthCard.getCardNo()).geteRank().getiRankNum());
+					hs.setLoHand(h.getCardsInHand().get(eCardNo.SecondCard.getCardNo()).geteRank().getiRankNum());
+
 				}
-				hs.setLoHand(0);
 				ArrayList<Card> kickers = new ArrayList<Card>();
 				kickers.add(h.getCardsInHand().get(eCardNo.FirstCard.getCardNo()));
 				hs.setKickers(kickers);
@@ -316,14 +483,17 @@ public class Hand {
 					&& (h.getCardsInHand().get(eCardNo.FourthCard.getCardNo()).geteRank() == h.getCardsInHand()
 							.get(eCardNo.FifthCard.getCardNo()).geteRank())) {
 				bHandCheck = true;
-				hs.setHandStrength(eHandStrength.ThreeOfAKind.getHandStrength());
+				hs.setHandStrength(eHandStrength.TwoPair.getHandStrength());
 				if (h.getCardsInHand().get(eCardNo.FirstCard.getCardNo()).geteRank().getiRankNum() > h.getCardsInHand()
 						.get(eCardNo.FourthCard.getCardNo()).geteRank().getiRankNum()) {
 					hs.setHiHand(h.getCardsInHand().get(eCardNo.FirstCard.getCardNo()).geteRank().getiRankNum());
+					hs.setLoHand(h.getCardsInHand().get(eCardNo.FourthCard.getCardNo()).geteRank().getiRankNum());
+
 				} else {
 					hs.setHiHand(h.getCardsInHand().get(eCardNo.FourthCard.getCardNo()).geteRank().getiRankNum());
+					hs.setLoHand(h.getCardsInHand().get(eCardNo.FirstCard.getCardNo()).geteRank().getiRankNum());
+
 				}
-				hs.setLoHand(0);
 				ArrayList<Card> kickers = new ArrayList<Card>();
 				kickers.add(h.getCardsInHand().get(eCardNo.ThirdCard.getCardNo()));
 				hs.setKickers(kickers);
@@ -332,6 +502,15 @@ public class Hand {
 		return bHandCheck;
 	}
 
+	/**
+	 * checks to see if a hand has one pair
+	 * 
+	 * @param h
+	 *            a hand
+	 * @param hs
+	 *            a hand score
+	 * @return a boolean checking if the hand has been evaluated
+	 */
 	public static boolean isHandPair(Hand h, HandScore hs) {
 
 		boolean bHandCheck = false;
@@ -384,9 +563,32 @@ public class Hand {
 		return bHandCheck;
 	}
 
+	/**
+	 * checks to see if a hand is a high card
+	 * 
+	 * @param h
+	 *            a hand
+	 * @param hs
+	 *            a hand score
+	 * @return a boolean checking if the hand has been evaluated
+	 */
 	public static boolean isHandHighCard(Hand h, HandScore hs) {
-		hs.setHandStrength(eHandStrength.HighCard.getHandStrength());
-		return false;
+		boolean bHandCheck = false;
+		if (!isHandStraight(h, hs) && !isHandThreeOfAKind(h, hs) && !isHandTwoPair(h, hs) && !isHandPair(h, hs)
+				&& !isHandFlush(h, hs) && !isHandFlush(h, hs) && !isHandFullHouse(h, hs) && !isHandFourOfAKind(h, hs)
+				&& !isHandStraightFlush(h, hs) && !isHandRoyalFlush(h, hs)) {
+			bHandCheck = true;
+			hs.setHandStrength(eHandStrength.HighCard.getHandStrength());
+			hs.setHiHand(h.getCardsInHand().get(eCardNo.FirstCard.getCardNo()).geteRank().getiRankNum());
+			hs.setLoHand(0);
+			ArrayList<Card> kickers = new ArrayList<Card>();
+			kickers.add(h.getCardsInHand().get(eCardNo.SecondCard.getCardNo()));
+			kickers.add(h.getCardsInHand().get(eCardNo.ThirdCard.getCardNo()));
+			kickers.add(h.getCardsInHand().get(eCardNo.FourthCard.getCardNo()));
+			kickers.add(h.getCardsInHand().get(eCardNo.FifthCard.getCardNo()));
+			hs.setKickers(kickers);
+		}
+		return bHandCheck;
 	}
 
 }
